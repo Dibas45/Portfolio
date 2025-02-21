@@ -1,35 +1,34 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from 'emailjs-com'; 
 
 const Contact = () => {
+  const form = useRef();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    emailjs
+    .sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, form.current, {
+      publicKey: import.meta.env.VITE_PUBLIC_KEY,
+    })
+    .then(
+      () => {
+        setSuccessMessage('Your message has been sent!');
+        setName('');
+        setEmail('');
+        setMessage('');
+      },
+      (error) => {
+       setErrorMessage(error)
+      },
+    );
 
-    const templateParams = {
-      from_name: name,
-      from_email: email,
-      message: message,
-    };
 
-
-    emailjs.send(
-      import.meta.env.VITE_SERVICE_ID,
-      import.meta.env.VITE_TEMPLATE_ID,
-      templateParams,
-      import.meta.env.VITE_EMAILJS_API_KEY 
-    ).then(() => {
-      setSuccessMessage('Your message has been sent!');
-      setName('');
-      setEmail('');
-      setMessage('');
-    }).catch((error) => {
-      console.error('Failed to send message:', error);
-    });
   };
 
   return (
@@ -45,8 +44,9 @@ const Contact = () => {
         <p className="text-lg text-gray-300 mb-8">I'd love to hear from you. Drop me a message!</p>
 
         {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
+        {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form  ref={form}  onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-lg font-medium text-white">Name</label>
             <input
@@ -98,3 +98,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

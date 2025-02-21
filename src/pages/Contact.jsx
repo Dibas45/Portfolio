@@ -4,6 +4,12 @@ import emailjs from 'emailjs-com';
 const Contact = () => {
   const form = useRef();
 
+const YOUR_SERVICE_ID =import.meta.env.VITE_SERVICE_ID;
+  const YOUR_TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
+  const YOUR_PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY; 
+
+  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -12,23 +18,21 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    emailjs
-    .sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, form.current, {
-      publicKey: import.meta.env.VITE_PUBLIC_KEY,
-    })
-    .then(
+  
+    emailjs.sendForm(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, form.current, {
+      publicKey: YOUR_PUBLIC_KEY,
+    }).then(
       () => {
         setSuccessMessage('Your message has been sent!');
+        setErrorMessage(''); 
         setName('');
         setEmail('');
         setMessage('');
       },
       (error) => {
-       setErrorMessage(error)
-      },
+        setErrorMessage(error.text || 'Failed to send message. Please try again.'); 
+      }
     );
-
-
   };
 
   return (
@@ -46,7 +50,7 @@ const Contact = () => {
         {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
         {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
 
-        <form  ref={form}  onSubmit={handleSubmit} className="space-y-6">
+        <form  ref={form} onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-lg font-medium text-white">Name</label>
             <input
@@ -87,7 +91,7 @@ const Contact = () => {
 
           <button
             type="submit"
-            className="w-md py-3 text-lg font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-md py-3 text-lg font-semibold text-white bg-green-500 rounded-md hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             Send Message
           </button>

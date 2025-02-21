@@ -57,7 +57,7 @@ const About = () => {
 </div>
 
         <div className="mt-8">
-          <Link to="/contact" className="text-blue-400 hover:underline">
+          <Link to="/contact" className="text-green-400 hover:underline">
             Contact Me
           </Link>
         </div>

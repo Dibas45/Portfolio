@@ -2,18 +2,18 @@
 const Projects = () => {
   const projectsData = [
     {
+      title: 'Sports Venue Booking',
+      description: 'Sports Venue Booking is an app where we can book sports venues and manage bookings.',
+      image: 'sports.png',
+      techStack: ['React.js', 'Tailwind Css', 'Redux','Supabase'],
+      link: 'https://sports-venue-booking-alpha.vercel.app/'
+    },
+    {
       title: 'D-Movies',
       description: 'D-Movies is a movies app where we can search movies, give ratings to the movies and add the movies into a list.',
       image: 'movie.png',
       techStack: ['React.js', 'Tailwind Css'],
       link: 'https://d-movies-pi.vercel.app/'
-    },
-    {
-      title: 'E-Learning Website',
-      description: 'E-Learning Website is an app where we can take courses and give mock tests.',
-      image: 'elearn.png',
-      techStack: ['React.js', 'Tailwind Css', 'Redux'],
-      link: 'https://e-learning-website-delta.vercel.app/'
     },
     {
       title: 'E-Commerce Website',
